@@ -1,12 +1,8 @@
 provider "aws" {
-  region  = "${var.aws["region"]}"
-  profile = "${var.aws["profile"]}"
-  version = "~> 1.51.0"
+  region  = "us-east-1"
+  profile = "${var.aws_profile}"
 }
 
-variable "aws" {
-  default = {
-    region  = "us-east-1"
-    profile = "dev"
-  }
+variable "aws_profile" {
+  value = "dev"
 }

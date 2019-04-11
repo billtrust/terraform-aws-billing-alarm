@@ -1,18 +1,12 @@
-variable "period_in_hours" {
-    description = "Hours between evaluations. Default is 6"
-    default = "6"
-}
-
 variable "aws_env" {
-    description = "AWS environment you are deploying to. Will be appended to SNS topic and alarm name."
+    description = "AWS environment you are deploying to. Will be appended to SNS topic and alarm name. (e.g. dev, stage, prod)"
 }
-
 
 variable "billing_threshold" {
-    description = "Maximum dollar amount for billing period"
+    description = "The threshold for which estimated charges will trigger the metric alarm."
 }
 
 variable "currency" {
-    description = "Short notation for currency type (e.g. USD)"
+    description = "Short notation for currency type (e.g. USD, CAD, EUR)"
     default = "USD"
 }
