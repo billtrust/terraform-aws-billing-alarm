@@ -1,5 +1,7 @@
 # AWS Billing Alarm module
 
+Authored by [Jaime Wissner](https://github.com/jairenee)
+
 Simply adds a billing alert and sns topic to alert when a threshold is reached. You still need to subscribe to the sns topic manually. Working on a solution to that.
 
 Visit [the registry page](https://registry.terraform.io/modules/billtrust/billing-alarm/aws) for more information.
