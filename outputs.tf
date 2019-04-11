@@ -1,6 +1,6 @@
 output "sns_topic" {
     value = <<EOO
-    A billing alarm has been set for this account with a threshold of ${var.currency} ${var.billing_threshold}. 
+    A billing alarm has been set for this account with a threshold of ${var.currency} ${var.monthly_billing_threshold}. 
     Any estimated charges above this amount will trigger an alarm publish to the SNS topic below.
 
     !! MANUAL STEP :
