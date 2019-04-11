@@ -6,13 +6,16 @@ Visit [the registry page](https://registry.terraform.io/modules/billtrust/billin
 
 ## Example
 
-```
+```terraform
 module "billing_alert" {
   source = "billtrust/billing-alarm/aws"
 
+  # Will be appended to SNS topic and alarm name
   aws_env = "dev"
-  billing_threshold = 10000
-  currency = "USD" # optional
+  # Alarm when estimated monthly charges are above this amount
+  monthly_billing_threshold = 10000
+  # Currency is optional and defaults to USD
+  currency = "USD"
 }
 ```
 
@@ -25,32 +28,6 @@ This metric is checked every 8 hours, and a single metric sample above the thres
 The alarm action is automatically set to the created SNS topic, `billing-alarm-notification-${lower(currency)}-${aws_env}`. **YOU MUST MANUALLY SUBSCRIBE TO THIS SNS TOPIC.**
 
 Currency is an optional variable. It defaults to USD, however you can provide any currency abbreviation (e.g. CAD, EUR, JPY) so you can seperate billing alerts by currency. I don't know if that's a common thing, but it's a provided dimension by Amazon, so I added support for it here.
-
-## Resources
-
-These are the actual resources created:
-
-```
-resource "aws_cloudwatch_metric_alarm" "billing" {
-  alarm_name                = "billing-alarm-${lower(var.currency)}-${var.aws_env}"
-  comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "1"
-  metric_name               = "EstimatedCharges"
-  namespace                 = "AWS/Billing"
-  period                    = "28800"
-  statistic                 = "Maximum"
-  threshold                 = "${var.billing_threshold}"
-  alarm_actions             = ["${aws_sns_topic.sns_alert_topic.arn}"]
-
-  dimensions = {
-      Currency = "${var.currency}"
-  }
-}
-
-resource "aws_sns_topic" "sns_alert_topic" {
-    name = "billing-alarm-notification-${lower(var.currency)}-${var.aws_env}"
-}
-```
 
 ## Output
 
