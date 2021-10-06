@@ -18,6 +18,14 @@ module "billing_alert" {
   monthly_billing_threshold = 10000
   # Currency is optional and defaults to USD
   currency = "USD"
+
+  # (Optional) pass in additional action ARN's that you want to act on
+  # when the alarm transitions into ALARM state
+  alarm_action_arns = [
+    "arn:aws:sns:us-east-1:123456789012:CloudWatch-to-PD",
+    "arn:aws:sns:us-east-1:123456789012:CloudWatch-to-Lambda",
+    "arn:aws:sns:us-east-1:123456789012:SQS-Alarm-Processing",
+  ]
 }
 ```
 
@@ -44,7 +52,7 @@ output "sns_topic" {
 For the example block at the top of the readme, it would print the following as output:
 
 ```
-A billing alarm has been set for this account with a threshold of USD 10000. 
+A billing alarm has been set for this account with a threshold of USD 10000.
 Any estimated charges above this amount will trigger an alarm publish to the SNS topic below.
 
 !! MANUAL STEP :
